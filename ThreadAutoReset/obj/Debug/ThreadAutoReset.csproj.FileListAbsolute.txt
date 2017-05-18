@@ -1,0 +1,12 @@
+C:\Users\Programista\Downloads\ThreadAutoReset\ThreadAutoReset\bin\Debug\ThreadAutoReset.exe.config
+C:\Users\Programista\Downloads\ThreadAutoReset\ThreadAutoReset\bin\Debug\ThreadAutoReset.exe
+C:\Users\Programista\Downloads\ThreadAutoReset\ThreadAutoReset\bin\Debug\ThreadAutoReset.pdb
+C:\Users\Programista\Downloads\ThreadAutoReset\ThreadAutoReset\obj\Debug\ThreadAutoReset.csprojResolveAssemblyReference.cache
+C:\Users\Programista\Downloads\ThreadAutoReset\ThreadAutoReset\obj\Debug\ThreadAutoReset.exe
+C:\Users\Programista\Downloads\ThreadAutoReset\ThreadAutoReset\obj\Debug\ThreadAutoReset.pdb
+D:\Programowanie\VisualProjects\ThreadAutoReset\ThreadAutoReset\bin\Debug\ThreadAutoReset.exe.config
+D:\Programowanie\VisualProjects\ThreadAutoReset\ThreadAutoReset\obj\Debug\ThreadAutoReset.exe
+D:\Programowanie\VisualProjects\ThreadAutoReset\ThreadAutoReset\obj\Debug\ThreadAutoReset.pdb
+D:\Programowanie\VisualProjects\ThreadAutoReset\ThreadAutoReset\bin\Debug\ThreadAutoReset.exe
+D:\Programowanie\VisualProjects\ThreadAutoReset\ThreadAutoReset\bin\Debug\ThreadAutoReset.pdb
+D:\Programowanie\VisualProjects\ThreadAutoReset\ThreadAutoReset\obj\Debug\ThreadAutoReset.csprojResolveAssemblyReference.cache
