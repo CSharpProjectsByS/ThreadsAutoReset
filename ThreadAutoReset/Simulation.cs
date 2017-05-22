@@ -17,12 +17,19 @@ namespace ThreadAutoReset
         private static AutoResetEvent event_1 = new AutoResetEvent(false);
         private static AutoResetEvent event_2 = new AutoResetEvent(false);
 
+
+        public void Start()
+        {
+            do
+            { 
+                RunScenerios();
+                
+            } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
+        }
+
         public void RunScenerios()
         {
             Console.Clear();
-
-            
-
             Console.Write("Zakres dolny: ");
             lowerRange = Int32.Parse(Console.ReadLine());
             Console.Write("Zakres górny: ");
@@ -53,7 +60,30 @@ namespace ThreadAutoReset
 
         private void RunNormal()
         {
-            
+            int startEven = 0;
+            int endEven = 0;
+            int startOdd = 0;
+            int endOdd = 0;
+
+            PrepareRanges(ref startEven, ref endEven, ref startOdd, ref endOdd);
+
+            //Console.WriteLine("Zakres dla parzystych: {0} - {1}", startEven, endEven);
+            //Console.WriteLine("Zakres dla nieparzystych: {0} - {1}", startOdd, endOdd);
+
+            Thread thread1 = new Thread(() => showNormal(startEven, endEven));
+            Thread thread2 = new Thread(() => showNormal(startOdd, endOdd));
+
+            if (startEven < startOdd)
+            {
+                
+                thread1.Start();
+                thread2.Start();
+            }
+            else
+            {
+                thread2.Start();
+                thread1.Start();
+            }
         }
 
         private void RunWithSignaling()
@@ -63,73 +93,74 @@ namespace ThreadAutoReset
             int startOdd = 0;
             int endOdd = 0;
 
-           if (lowerRange % 2 == 0)
-            {
-                startEven = lowerRange;
-                startOdd = lowerRange + 1;
-            } 
-           else
-            {
-                startEven = lowerRange + 1;
-                startOdd = lowerRange;
-            }
-
-           if (upperRange % 2 == 0)
-            {
-                endEven = upperRange;
-                endOdd = upperRange - 1;
-            }
-           else
-            {
-                endEven = upperRange - 1;
-                endOdd = upperRange;
-            }
+            PrepareRanges(ref startEven, ref endEven, ref startOdd, ref endOdd);
 
             //Console.WriteLine("Zakres dla parzystych: {0} - {1}", startEven, endEven);
             //Console.WriteLine("Zakres dla nieparzystych: {0} - {1}", startOdd, endOdd);
 
             if (startEven < startOdd)
             {
-                Thread thread1 = new Thread(() => ShowEven(startEven, endEven, true));
-                Thread thread2 = new Thread(() => ShowOdd(startOdd, endOdd, false));
+                Thread thread1 = new Thread(() => ShowEvenAuto(startEven, endEven, true));
+                Thread thread2 = new Thread(() => ShowOddAuto(startOdd, endOdd, false));
                 thread1.Start();
                 thread2.Start();
             }
             else
             {
-                Thread thread1 = new Thread(() => ShowEven(startEven, endEven, false));
-                Thread thread2 = new Thread(() => ShowOdd(startOdd, endOdd, true));
+                Thread thread1 = new Thread(() => ShowEvenAuto(startEven, endEven, false));
+                Thread thread2 = new Thread(() => ShowOddAuto(startOdd, endOdd, true));
                 thread2.Start();
                 thread1.Start();
             }
         }
 
-        private void ShowEven(int start, int end, bool isFirst)
+        private void PrepareRanges(ref int startEven, ref int endEven, ref int startOdd, ref int endOdd)
         {
-            /*
-            if (isFirst)
+            if (lowerRange % 2 == 0)
             {
-                Console.Write("Wyświetlam parzystą: ");
-                Console.WriteLine(start);
-                event_1.WaitOne();
+                startEven = lowerRange;
+                startOdd = lowerRange + 1;
             }
             else
             {
-                Console.Write("Wyświetlam parzystą: ");
-                Console.WriteLine(start);
-                event_2.Set();
-                event_1.WaitOne();
-            }*/
-            
-           for (int i = start; i <= end; i += 2)
+                startEven = lowerRange + 1;
+                startOdd = lowerRange;
+            }
+
+            if (upperRange % 2 == 0)
+            {
+                endEven = upperRange;
+                endOdd = upperRange - 1;
+            }
+            else
+            {
+                endEven = upperRange - 1;
+                endOdd = upperRange;
+            }
+        }
+
+        private void showNormal(int start, int end)
+        {
+            for (int i = start; i <= end; i += 2)
             {
                 Console.WriteLine(i);
                 Thread.Sleep(time);
+            }
+        }
 
-                if (!(i == start && isFirst))
+        private void ShowEvenAuto(int start, int end, bool isFirst)
+        {
+            
+           for (int i = start; i <= end; i += 2)
+            {
+                if (!isFirst && i == start)
                 {
-                    event_2.Set();
+                    event_1.WaitOne();
                 }
+                Console.WriteLine(i);
+                Thread.Sleep(time);
+
+                event_2.Set();
                 
                 if (i != end)
                 {
@@ -141,40 +172,26 @@ namespace ThreadAutoReset
 
         }
 
-        private void ShowOdd(int start, int end, bool isFirst)
-        {/*
-            if (isFirst)
-            {
-                Console.Write("Wyświetlam nieparzystą: ");
-                Console.WriteLine(start);
-                event_2.WaitOne();
-            }
-            else
-            {
-                Console.Write("Wyświetlam nieparzystą: ");
-                Console.WriteLine(start);
-                event_1.Set();
-                event_2.WaitOne();
-            }*/
+        private void ShowOddAuto(int start, int end, bool isFirst)
+        {
 
             for (int i = start; i <= end; i += 2)
             {
+                if (!isFirst && i == start)
+                {
+                    event_2.WaitOne();
+                }
+
                 Console.WriteLine(i);
                 Thread.Sleep(time);
 
-                if (!(i == start && isFirst))
-                {
-                    event_1.Set();
-                }
-
+                event_1.Set();
+                
                 if (i != end)
                 {
                     event_2.WaitOne();
                 }
-                
             }
-
         }
-       
     }
 }
