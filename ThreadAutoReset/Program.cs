@@ -11,7 +11,8 @@ namespace ThreadAutoReset
         static void Main(string[] args)
         {
             Simulation sim = new Simulation();
-            sim.RunScenerios();
+            sim.Start();
+            //Console.ReadKey();
         }
     }
 }
