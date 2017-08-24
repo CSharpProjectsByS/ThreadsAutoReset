@@ -3,7 +3,7 @@
 ## W tej aplikacji mamy przykład synchroniazacji wątków.
 
 ### Program ma za zadnie wyświetlić za pomocą dwóch wątków liczby z podanego zakresu. Jeden z nich jest odpowiedzialny za 
-wyświetlenie liczb nieparzystych, drugi parzystych.
+### wyświetlenie liczb nieparzystych, drugi parzystych.
 
 Program otrzymuje następujące dane:
 
